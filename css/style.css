@@ -1,0 +1,113 @@
+/* ===== Variables ===== */
+:root {
+    --tinta: #101820;
+    --hueso: #efede6;
+    --esmalte: #2f5da8;
+    --azafran: #f2b632;
+}
+
+body {
+    background: var(--hueso);
+    color: var(--tinta);
+    overflow-x: hidden; /* evita desborde horizontal */
+}
+
+/* ===== Navbar / logo ===== */
+.logo { display: flex; align-items: center; gap: .5rem; font-weight: 700; }
+.logo-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--azafran);
+    animation: latido 2s ease-in-out infinite;
+}
+
+/* ===== Hero ===== */
+.hero { background: var(--tinta); color: var(--hueso); padding: 4rem 0; }
+.hero-title {
+    font-weight: 800;
+    /* Animación personalizada: el título entra deslizándose */
+    animation: deslizar 1s ease-out 1.4s 1 both;
+}
+
+/* Rueda de alfarero: giro infinito */
+.pottery-wheel {
+    width: 200px; height: 200px; margin: 0 auto;
+    border-radius: 50%;
+    background: conic-gradient(var(--esmalte), var(--azafran), var(--esmalte));
+    border: 10px solid var(--hueso);
+    animation: girar 6s linear infinite;
+}
+
+/* ===== Transformaciones 2D con transition ===== */
+.caja {
+    background: #fff;
+    border-left: 6px solid var(--esmalte);
+    padding: 1.5rem;
+    height: 100%;
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+.caja-rotar:hover   { transform: rotate(6deg); box-shadow: 0 10px 25px rgba(0,0,0,.2); }
+.caja-escalar:hover { transform: scale(1.1);   box-shadow: 0 10px 25px rgba(0,0,0,.2); }
+.caja-sesgar:hover  { transform: translateY(-12px) skewX(-6deg); box-shadow: 0 10px 25px rgba(0,0,0,.2); }
+
+/* ===== Transformaciones 3D ===== */
+.seccion-3d { background: #e2dfd4; }
+
+.escena-3d {
+    width: 280px; height: 200px;
+    perspective: 900px;               /* perspectiva en el padre */
+}
+.tarjeta-3d {
+    position: relative;
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;     /* mantiene los hijos en 3D */
+    transition: transform .9s ease;
+}
+.escena-3d:hover .tarjeta-3d {
+    transform: rotateX(12deg) rotateY(180deg);
+}
+.cara {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1rem; text-align: center;
+    backface-visibility: hidden;
+    border-radius: 12px;
+}
+.frente  { background: var(--esmalte); color: #fff; }
+.reverso { background: var(--azafran); color: var(--tinta); transform: rotateY(180deg); }
+
+/* ===== Loader de página (CSS puro) ===== */
+.page-loader {
+    position: fixed; inset: 0; z-index: 2000;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--tinta);
+    animation: ocultar .5s ease 1.2s forwards;
+}
+.spinner-ring {
+    width: 56px; height: 56px;
+    border: 6px solid rgba(255,255,255,.25);
+    border-top-color: var(--azafran);
+    border-radius: 50%;
+    animation: girar 0.9s linear infinite;
+}
+
+/* Mini spinner dentro del botón Enviar */
+.spinner-mini {
+    display: inline-block;
+    width: 14px; height: 14px; margin-right: .4rem;
+    border: 2px solid rgba(255,255,255,.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: girar 1s linear infinite;
+}
+
+/* ===== @keyframes ===== */
+@keyframes girar    { to { transform: rotate(360deg); } }
+@keyframes deslizar { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes latido   { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); background: #fff; } }
+@keyframes ocultar  { to { opacity: 0; visibility: hidden; } }
+
+/* ===== Accesibilidad ===== */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
